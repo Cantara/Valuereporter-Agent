@@ -17,7 +17,7 @@ Start your appserver/program with an additional command -javaagent:<path to Valu
 __Example:__
 ```
 java -javaagent:../valuereporter-agent/valuereporter-agent-jar-with-dependencies.jar= \
-base.package:com.example,valuereporter.host:localhost,valuereporter.port:4901,prefix:myService \
+base.package:com.example,valuereporter.host:localhost,valuereporter.port:4901,serviceName:myService \
  -jar <your jar file>
 ```
 
@@ -26,7 +26,7 @@ __Example Tomcat:__
 In catalina.bat, add to top of the file.
 ```
 SET JAVA_OPTS=%JAVA_OPTS% -javaagent:../valuereporter-agent/valuereporter-agent-jar-with-dependencies.jar= \
-base.package:com.example,valuereporter.host:localhost,valuereporter.port:4901,prefix:myService \
+base.package:com.example,valuereporter.host:localhost,valuereporter.port:4901,serviceName:myService \
 ```
 
 Configuration
@@ -35,7 +35,7 @@ Configuration
 * __base.package__ - The package you want to scan. Example: com.example
 * __valuereporter.host__ - Where ValueReporter is running. (optional) Example: localhost
 * __valuereporter.port__ - Port of  ValueReporter (optional) Example: 8080
-* __prefix__  - unique identifier for this service, and node. Used to identify the input from multiple services
+* __serviceName__  - unique identifier for this service, and node. Used to identify the input from multiple services
 and nodes, in Valuereporter
 
 Future improvements
@@ -64,11 +64,11 @@ Installation included in your service
         try {
             String reporterHost = appConfig.getProperty("valuereporter.host");
             String reporterPort = appConfig.getProperty("valuereporter.port");
-            String prefix = appConfig.getProperty("applicationname");
+            String serviceName = appConfig.getProperty("applicationname");
             int cacheSize = Integer.parseInt(appConfig.getProperty("valuereporter.activity.batchsize"));
             int forwardInterval = Integer.parseInt(appConfig.getProperty("valuereporter.activity.postintervalms"));
-            new Thread(new ObservedActivityDistributer(reporterHost, reporterPort, prefix, cacheSize, forwardInterval)).start();
-            new Thread(new HttpObservationDistributer(reporterHost, reporterPort, prefix)).start();
+            new Thread(new ObservedActivityDistributer(reporterHost, reporterPort, serviceName, cacheSize, forwardInterval)).start();
+            new Thread(new HttpObservationDistributer(reporterHost, reporterPort, serviceName)).start();
 
         } catch (Exception e) {
             log.warn("Error in valueReporter property configuration - unable to start observers");
@@ -82,5 +82,9 @@ Installation included in your service
 ObservedActivity observedActivity = new ObservedActivity(activityName, System.currentTimeMillis());
 MonitorReporter.reportActivity(observedActivity);
 ```
+
+### Migrate to 1.0
+
+* prefix -> serviceName : More consistent naming.
 
 
