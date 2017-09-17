@@ -85,6 +85,6 @@ MonitorReporter.reportActivity(observedActivity);
 
 ### Migrate to 1.0
 
-* prefix -> serviceName : More consistent naming.
+* serviceName -> serviceName : More consistent naming.
 
 

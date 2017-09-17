@@ -2,7 +2,7 @@ package org.valuereporter.agent.crawler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.valuereporter.agent.ImplementedMethod;
+import org.valuereporter.ImplementedMethod;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

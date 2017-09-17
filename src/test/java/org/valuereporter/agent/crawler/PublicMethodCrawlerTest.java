@@ -1,7 +1,7 @@
 package org.valuereporter.agent.crawler;
 
 import org.testng.annotations.Test;
-import org.valuereporter.agent.ImplementedMethod;
+import org.valuereporter.ImplementedMethod;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,8 @@
 package org.valuereporter.agent.activity;
 
 import org.slf4j.Logger;
+import org.valuereporter.activity.CommandActivitySender;
+import org.valuereporter.activity.ObservedActivity;
 
 import java.util.ArrayList;
 import java.util.List;

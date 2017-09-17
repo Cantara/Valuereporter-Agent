@@ -2,8 +2,8 @@ package org.valuereporter.agent.crawler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.valuereporter.agent.ImplementedMethod;
-import org.valuereporter.agent.http.HttpImplementedMethodSender;
+import org.valuereporter.ImplementedMethod;
+import org.valuereporter.http.HttpImplementedMethodSender;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -17,15 +17,15 @@ public class PublicMethodCrawler implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(PublicMethodCrawler.class);
     private final String reporterHost;
     private final String reporterPort;
-    private final String prefix;
+    private final String serviceName;
     private final String basePackage;
     private List<ImplementedMethod> publicMethods = new ArrayList<>();
     private int MAX_CACHE_SIZE = 500;
 
-    public PublicMethodCrawler(String reporterHost, String reporterPort, String prefix, String basePackage) {
+    public PublicMethodCrawler(String reporterHost, String reporterPort, String serviceName, String basePackage) {
         this.reporterHost = reporterHost;
         this.reporterPort = reporterPort;
-        this.prefix = prefix;
+        this.serviceName = serviceName;
         this.basePackage = basePackage;
     }
 
@@ -77,7 +77,7 @@ public class PublicMethodCrawler implements Runnable {
 
     private void forwardOutput() {
         log.trace("Forwarding PublicMethods. Local cache size {}", publicMethods.size());
-        new Thread(new HttpImplementedMethodSender(reporterHost, reporterPort, prefix, publicMethods)).start();
+        new Thread(new HttpImplementedMethodSender(reporterHost, reporterPort, serviceName, publicMethods)).start();
         publicMethods.clear();
     }
 }

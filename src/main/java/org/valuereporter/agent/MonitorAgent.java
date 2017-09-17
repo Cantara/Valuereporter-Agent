@@ -3,7 +3,7 @@ package org.valuereporter.agent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.valuereporter.agent.crawler.PublicMethodCrawler;
-import org.valuereporter.agent.http.HttpObservationDistributer;
+import org.valuereporter.client.http.HttpObservationDistributer;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
