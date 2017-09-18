@@ -77,7 +77,7 @@ public class TimedClassTransformer implements ClassFileTransformer {
             }
             return ctClass.toBytecode();
         } catch (Exception e) {
-            log.error("Skipipping class due to error. class {}, message {} ", className, e.getMessage(), e);
+            log.warn("Skipipping class due to error. class {}, message {} ", className, e.getMessage(), e);
             return null;
         }
     }
