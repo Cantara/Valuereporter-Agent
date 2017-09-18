@@ -68,7 +68,7 @@ public class TimedClassTransformer implements ClassFileTransformer {
                     method.addLocalVariable("__metricStartTime", CtClass.longType);
                     method.insertBefore("__metricStartTime = System.currentTimeMillis();");
                     String metricName = ctClass.getName() + "." + method.getName();
-                    method.insertAfter("org.valuereporter.agent.MonitorReporter.reportTime(\"" + metricName + "\", __metricStartTime, System.currentTimeMillis());");
+                    method.insertAfter("org.valuereporter.client.MonitorReporter.reportTime(\"" + metricName + "\", __metricStartTime, System.currentTimeMillis());");
                     isClassModified = true;
                 }
             }
