@@ -38,6 +38,10 @@ Configuration
 * __serviceName__  - unique identifier for this service, and node. Used to identify the input from multiple services
 and nodes, in Valuereporter
 
+Optional parameters:
+* __valuereporter.activity.batchsize__ Default is 500
+* __valuereporter.activity.postintervalms__ Default is 500
+
 Future improvements
 ===================
 

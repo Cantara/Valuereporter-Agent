@@ -3,6 +3,7 @@ package org.valuereporter.agent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.valuereporter.agent.crawler.PublicMethodCrawler;
+import org.valuereporter.client.activity.ObservedActivityDistributer;
 import org.valuereporter.client.http.HttpObservationDistributer;
 
 import java.lang.instrument.Instrumentation;
@@ -41,10 +42,14 @@ public class MonitorAgent {
     public static final String BASE_PACKAGE_KEY = "base.package";
     public static final String VALUE_REPORTER_HOST_KEY = "valuereporter.host";
     public static final String VALUE_REPORTER_PORT_KEY = "valuereporter.port";
-    public static final String PREFIX_KEY = "prefix";
+    public static final String SERVICE_NAME_KEY = "serviceName";
     private static final String DEFAULT_REPORTER_HOST = "localhost";
     private static final String DEFAULT_REPORTER_PORT = "4901";
-    private static final String DEFAULT_PREFIX = "prefix-not-set";
+    private static final String DEFAULT_SERVICE_NAME = "serviceName-not-set";
+    private static final String ACTIVITY_BATCH_SIZE_KEY = "valuereporter.activity.batchsize";
+    private static final String ACTIVITY_POST_INTERVAL_KEY = "valuereporter.activity.postintervalms";
+    private static final int DEFAULT_POST_INTERVAL_MS = 500;
+    private static final int DEFAULT_ACTIVITY_BATCH_SIZE = 500;
 
 
     public static void premain(String agentArguments, Instrumentation instrumentation) {
@@ -54,7 +59,9 @@ public class MonitorAgent {
         String basePackage = "";
         String reporterHost = DEFAULT_REPORTER_HOST;
         String reporterPort = DEFAULT_REPORTER_PORT;
-        String prefix = DEFAULT_PREFIX;
+        String serviceName = DEFAULT_SERVICE_NAME;
+        int activityPostIntrvalMS = DEFAULT_POST_INTERVAL_MS;
+        int activityBatchSize = DEFAULT_ACTIVITY_BATCH_SIZE;
 
         if (agentArguments != null) {
             Map<String, String> properties = new HashMap<>();
@@ -79,11 +86,25 @@ public class MonitorAgent {
             if ( port!= null) {
                 reporterPort = port;
             }
-            String tmpPrefix = properties.get(PREFIX_KEY);
+            String tmpPrefix = properties.get(SERVICE_NAME_KEY);
             if (tmpPrefix != null) {
-                prefix = tmpPrefix;
+                serviceName = tmpPrefix;
             }
-            log.info("ValueReporter prefix property {}", prefix);
+            log.info("ValueReporter serviceName property {}", serviceName);
+
+            String tmpActivityBatchSize = properties.get(ACTIVITY_BATCH_SIZE_KEY);
+            if (tmpActivityBatchSize != null) {
+                activityBatchSize = new Integer(tmpActivityBatchSize);
+            }
+            log.info("ValueReporter ACTIVITY_BATCH_SIZE property {}", activityBatchSize);
+
+            String tmpActivityPostInterval = properties.get(ACTIVITY_POST_INTERVAL_KEY);
+            if (tmpActivityPostInterval != null) {
+                activityPostIntrvalMS = new Integer(tmpActivityPostInterval);
+            }
+            log.info("ValueReporter ACTIVITY_BATCH_INTERVAL property {}", activityPostIntrvalMS);
+
+
 
 
         }
@@ -92,9 +113,11 @@ public class MonitorAgent {
         instrumentation.addTransformer(new TimedClassTransformer(basePackage));
 
         log.info("Starting HttpObservationDistributer");
-        new Thread(new HttpObservationDistributer(reporterHost, reporterPort, prefix)).start();
+        new Thread(new HttpObservationDistributer(reporterHost, reporterPort, serviceName)).start();
+        log.info("Starting ObservedActivityDistributer");
+        new Thread(ObservedActivityDistributer.getInstance(reporterHost, reporterPort, serviceName, activityPostIntrvalMS)).start();
         log.info("Activate Crawling for public methods.");
-        new Thread(new PublicMethodCrawler(reporterHost, reporterPort,prefix, basePackage)).start();
+        new Thread(new PublicMethodCrawler(reporterHost, reporterPort,serviceName, basePackage)).start();
     }
 
 
