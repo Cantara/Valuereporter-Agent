@@ -178,7 +178,7 @@
         <dependency>
             <groupId>org.valuereporter</groupId>
             <artifactId>valuereporter-java-client</artifactId>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -215,29 +215,6 @@
             <scope>compile</scope>
         </dependency>
 
-
-        <!-- http client -->
-        <!--
-      <dependency>
-          <artifactId>jersey-client</artifactId>
-          <groupId>org.glassfish.jersey.core</groupId>
-          <version>${jersey.version}</version>
-          -->
-        <!-- Exclude org.glassfish.hk2.external:aopalliance-repackaged:jar:2.2.0:compile due to overlapping classes with spring-aop -->
-        <!--
-          <exclusions>
-              <exclusion>
-                  <groupId>org.glassfish.hk2.external</groupId>
-                  <artifactId>aopalliance-repackaged</artifactId>
-              </exclusion>
-          </exclusions>
-      </dependency>
-      -->
-        <dependency>
-            <groupId>com.github.kevinsawicki</groupId>
-            <artifactId>http-request2</artifactId>
-            <version>6.0.3</version>
-        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
