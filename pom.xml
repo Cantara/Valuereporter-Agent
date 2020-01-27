@@ -26,7 +26,7 @@
                 <role>Developer</role>
             </roles>
             <organization>Valuereporter and Cantara</organization>
-            <organizationUrl>http://www.valuereporter.org/</organizationUrl>
+            <organizationUrl>https://www.valuereporter.org/</organizationUrl>
         </developer>
     </developers>
 
@@ -180,11 +180,7 @@
             <artifactId>valuereporter-java-client</artifactId>
             <version>1.0.9</version>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-        </dependency>
+        
 
         <dependency>
             <groupId>joda-time</groupId>
