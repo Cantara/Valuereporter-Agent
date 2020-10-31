@@ -5,18 +5,16 @@
     <artifactId>valuereporter-agent</artifactId>
     <version>1.0.19-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <description>javaagent monitoring activities in your application. This information is forwarded to Valuereporter via
-        http.
-    </description>
-
+    <description>javaagent monitoring activities in your application. This information is forwarded to Valuereporter via http </description>
     <name>valuereporter-agent</name>
+    <url>http://www.valuereporter.org</url>
+
     <parent>
         <groupId>no.cantara.emi</groupId>
         <artifactId>parent</artifactId>
         <version>8</version>
     </parent>
 
-    <url>http://www.valuereporter.org</url>
     <developers>
         <developer>
             <id>baardl</id>
@@ -31,9 +29,8 @@
     </developers>
 
     <properties>
+        <valuereporter-java-client>1.0.18</valuereporter-java-client>
         <slf4j.version>1.7.30</slf4j.version>
-        <!--<jersey.version>2.8</jersey.version>-->
-        <!--<metrics.version>3.0.1</metrics.version>-->
         <hystrix-core.version>1.5.18</hystrix-core.version>
         <rxjava_version_requested_by_hystrix-core>1.3.8</rxjava_version_requested_by_hystrix-core>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -47,30 +44,76 @@
         <tag>HEAD</tag>
     </scm>
 
-    <repositories>
-        <repository>
-            <id>glassfish-repository.dev.java.net</id>
-            <name>Java.net Glassfish Repository</name>
-            <url>https://download.java.net/maven/glassfish/</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
-            <id>maven2-repository.dev.java.net</id>
-            <name>Java.net Repository for Maven</name>
-            <url>https://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
 
-        <!-- Needed for parent  -->
-        <repository>
-            <id>cantara-releases</id>
-            <name>Cantara Release Repository</name>
-            <url>https://mvnrepo.cantara.no/content/repositories/releases/</url>
-        </repository>
-    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>org.valuereporter</groupId>
+            <artifactId>valuereporter-java-client</artifactId>
+            <version>${valuereporter-java-client}</version>
+        </dependency>
+        
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.6</version>
+        </dependency>
+
+        <!-- Use Hystrix when dealing with connections -->
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-core</artifactId>
+            <version>${hystrix-core.version}</version>
+        </dependency>
+
+        <!-- Transform classes -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.27.0-GA</version>
+        </dependency>
 
 
+        <!--Error in dependency mgmt of Hystrix -->
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>${rxjava_version_requested_by_hystrix-core}</version>
+            <scope>compile</scope>
+        </dependency>
 
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+        <!--
+        TEST
+        -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+    
+    
 
     <build>
         <finalName>valuereporter-agent</finalName>
@@ -173,72 +216,29 @@
             </plugin>
         </plugins>
     </build>
+    
+    <repositories>
+        <repository>
+            <id>glassfish-repository.dev.java.net</id>
+            <name>Java.net Glassfish Repository</name>
+            <url>https://download.java.net/maven/glassfish/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>https://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.valuereporter</groupId>
-            <artifactId>valuereporter-java-client</artifactId>
-            <version>1.0.9</version>
-        </dependency>
-        
-
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.10.6</version>
-        </dependency>
-
-        <!-- Use Hystrix when dealing with connections -->
-        <dependency>
-            <groupId>com.netflix.hystrix</groupId>
-            <artifactId>hystrix-core</artifactId>
-            <version>${hystrix-core.version}</version>
-        </dependency>
-
-        <!-- Transform classes -->
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.27.0-GA</version>
-        </dependency>
+        <!-- Needed for parent  -->
+        <repository>
+            <id>cantara-releases</id>
+            <name>Cantara Release Repository</name>
+            <url>https://mvnrepo.cantara.no/content/repositories/releases/</url>
+        </repository>
+    </repositories>
 
 
-        <!--Error in dependency mgmt of Hystrix -->
-        <dependency>
-            <groupId>io.reactivex</groupId>
-            <artifactId>rxjava</artifactId>
-            <version>${rxjava_version_requested_by_hystrix-core}</version>
-            <scope>compile</scope>
-        </dependency>
 
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-        <!--
-        TEST
-        -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.8</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 </project>
