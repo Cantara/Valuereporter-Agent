@@ -29,8 +29,9 @@
     </developers>
 
     <properties>
-        <valuereporter-java-client>1.8.1</valuereporter-java-client>
-        <slf4j.version>1.7.35</slf4j.version>
+        <valuereporter-java-client>1.10.0</valuereporter-java-client>
+        <java.version>1.8</java.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <hystrix-core.version>1.5.18</hystrix-core.version>
         <rxjava_version_requested_by_hystrix-core>1.3.8</rxjava_version_requested_by_hystrix-core>
         <maven.javadoc.skip>true</maven.javadoc.skip>
