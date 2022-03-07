@@ -29,7 +29,7 @@
     </developers>
 
     <properties>
-        <valuereporter-java-client>1.10.0</valuereporter-java-client>
+        <valuereporter-java-client>1.10.1</valuereporter-java-client>
         <java.version>1.8</java.version>
         <slf4j.version>1.7.36</slf4j.version>
         <hystrix-core.version>1.5.18</hystrix-core.version>
