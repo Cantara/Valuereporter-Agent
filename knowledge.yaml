@@ -1,0 +1,21 @@
+id: valuereporter-agent
+name: Valuereporter Agent
+version: 1.10.3-SNAPSHOT
+description: |
+  Java agent for automatic instrumentation of Whydah and Cantara services.
+  Transparently captures method invocations, HTTP requests, and timing data,
+  forwarding them to the Valuereporter service via HTTP without code changes.
+units:
+  - id: agent-core
+    name: Agent Core
+    type: component
+    description: JVM agent bootstrap and instrumentation entry point — attaches at JVM startup.
+    path: src/main/java/org/valuereporter
+  - id: interceptors
+    name: Interceptors
+    type: component
+    description: Bytecode interceptors for method tracking — captures invocations and latencies.
+  - id: reporter
+    name: Reporter
+    type: component
+    description: Async batch reporter that forwards captured events to the Valuereporter service.
